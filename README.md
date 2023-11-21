@@ -8,7 +8,7 @@ You'll need to have the [Deno Deploy CLI](https://github.com/denoland/deployctl)
 
 Then from the root of your static site folder, run the command:
 ```bash
-SPA_FALLBACK="/" deployctl deploy --project="$PROJECT_NAME" https://deno.land/x/deploy-spa-serve/main.ts
+SPA_FALLBACK="/" deployctl deploy --project="$PROJECT_NAME" https://deno.land/x/deploy_spa_serve/main.ts
 ```
 
 ### Environment Variables
