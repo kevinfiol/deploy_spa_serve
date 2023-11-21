@@ -1,6 +1,6 @@
-# deploy-spa-serve
+# deploy_spa_serve
 
-A simple file server for Deno Deploy that supports single-page applications. It's only dependencies are on the Deno standard library.
+A simple file server for Deno Deploy that supports single-page applications. Its only dependencies are on the Deno standard library.
 
 ## Usage
 
