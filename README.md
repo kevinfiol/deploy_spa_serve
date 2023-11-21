@@ -10,10 +10,12 @@ You'll need to have the [Deno Deploy CLI](https://github.com/denoland/deployctl)
 
 Then from the root of your static site folder, run the command:
 ```bash
-SPA_FALLBACK="/" deployctl deploy --project="$PROJECT_NAME" https://deno.land/x/deploy_spa_serve/main.ts
+deployctl deploy --project="$PROJECT_NAME" https://deno.land/x/deploy_spa_serve/main.ts
 ```
 
 ### Environment Variables
+
+From `https://dash.deno.com/projects/[YOUR_PROJECT_NAME]/settings`, you can set the following environment variables.
 
 #### `SPA_FALLBACK`
 You must set this to enable single-page application support, otherwise, the server will treat every route as a file. Using `/` or `/index.html` will set the fallback to the root `index.html` file in your project.
