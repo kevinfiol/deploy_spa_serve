@@ -2,6 +2,8 @@
 
 A simple file server for Deno Deploy that supports single-page applications. Its only dependencies are on the Deno standard library.
 
+`deploy_spa_serve` avoids filesystem checks on every request (expensive), and instead walks through your project directory on startup and keeps a cache of filepaths (thank you [sirv](https://github.com/lukeed/sirv) for this idea).
+
 ## Usage
 
 You'll need to have the [Deno Deploy CLI](https://github.com/denoland/deployctl) installed on your system or CI.
