@@ -6,7 +6,7 @@ const FALLBACK = Deno.env.get('SPA_FALLBACK') || '';
 const SPA_GLOBS = Deno.env.get('SPA_GLOBS') || '';
 const IGNORE_GLOBS = Deno.env.get('IGNORE_GLOBS') || '';
 
-const FILES = new Map<string, string>();
+const FILES = new Map();
 const ROOT = resolve('.');
 const DEFAULT_IGNORES = [
   '**/.git/**/*',
