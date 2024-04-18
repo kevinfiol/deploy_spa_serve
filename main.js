@@ -1,29 +1,42 @@
-import { walk, existsSync } from 'https://deno.land/std@0.204.0/fs/mod.ts';
-import { resolve, globToRegExp, join } from 'https://deno.land/std@0.204.0/path/mod.ts';
-import { serveFile } from "https://deno.land/std@0.204.0/http/file_server.ts";
+import { walk, existsSync } from 'https://deno.land/std@0.223.0/fs/mod.ts';
+import { resolve, globToRegExp, join } from 'https://deno.land/std@0.223.0/path/mod.ts';
+import { serveFile } from "https://deno.land/std@0.223.0/http/file_server.ts";
 
 const FALLBACK = Deno.env.get('SPA_FALLBACK') || '';
 const SPA_GLOBS = Deno.env.get('SPA_GLOBS') || '';
+const IGNORE_GLOBS = Deno.env.get('IGNORE_GLOBS') || '';
 
 const FILES = new Map<string, string>();
 const ROOT = resolve('.');
-const IGNORE_GLOBS = ['**/.git/**/*', '**/.git'];
-const IGNORE_PATTERNS = IGNORE_GLOBS.map((glob) => globToRegExp(glob));
+const DEFAULT_IGNORES = [
+  '**/.git/**/*',
+  '**/.git',
+  '**/.env',
+  '**/.gitignore',
+  '**/.DS_Store',
+  '**/node_modules',
+  '**/node_modules/**/*'
+];
+
+const IGNORE_PATTERNS = DEFAULT_IGNORES.concat(IGNORE_GLOBS ? IGNORE_GLOBS.split(',') : []).map((glob) => globToRegExp(glob));
 const SPA_PATTERNS = SPA_GLOBS ? SPA_GLOBS.split(',').map((glob) => globToRegExp(glob)) : [];
 
-const normalize = (path: string) => {
+const normalize = (path = '') => {
   return path.replace(/\\/g, '/').normalize();
 };
 
-const checkPatterns = (path: string, patterns: RegExp[]) => {
-  for (const pattern of patterns) {
+/**
+ * @param {string} path
+ * @param {RegExp[]} patterns
+ */
+const checkPatterns = (path, patterns) => {
+  for (const pattern of patterns)
     if (pattern.test(path)) return true;
-  }
 
   return false;
 };
 
-const routeToSPA = (pathname: string) => {
+const routeToSPA = (pathname = '') => {
   // check if the path has a filetype-like path (has a `.`)
   const end = pathname.split('/').pop();
   if (end && end.indexOf('.') > 0) {
